@@ -1,0 +1,21 @@
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
+
+[tasks.build]
+command = "cargo"
+args = ["build", "--target=wasm32-unknown-unknown"]
+
+[tasks.w2ltest]
+# install_crate = "wasynth"
+# install_crate_args = ["--git", "https://github.com/Rerumu/Wasynth/", "codegen-luau"]
+script = ['''wasm2luau ./target/wasm32-unknown-unknown/debug/rgwasm.wasm > ./wasm.lua''']
+
+[tasks.codegen]
+dependencies = ["build", "w2ltest"]
+
